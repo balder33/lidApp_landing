@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  *{ -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{ margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,"SF Pro Text",system-ui,sans-serif; transition:background .3s ease, color .3s ease;
+    --bg:#F3F1F8; --surface:#FFFFFF; --surface-2:#FAF9FD; --surface-3:#F3F1F1;
+    --text:#1A1722; --text-2:#56525F; --text-3:#6B6678; --text-4:#A39FB0; --text-5:#C2BFCB;
+    --line:rgba(26,23,34,0.09); --accent:#6E56F0; --accent-soft:#EDE9FE; --accent-border:rgba(110,86,240,0.28);
+    --toggle-bg:#EAE6FB; --thumb-bg:#FFFFFF; --header-bg:rgba(243,241,248,0.78); --float-bg:rgba(255,255,255,0.86);
+    --btn-bg:#1A1722; --btn-fg:#FFFFFF; --dot-off:rgba(26,23,34,0.16);
+    --tint-warm:#FBEBE3; --tint-gold:#F7EFD9; --tint-green:#E3F4EB; }
+  body[data-theme="dark"]{
+    --bg:#0F0D15; --surface:#1B1826; --surface-2:#17141F; --surface-3:#15121C;
+    --text:#F2F0F7; --text-2:#B9B5C5; --text-3:#9D99AC; --text-4:#7E7A8A; --text-5:#5E5A6B;
+    --line:rgba(255,255,255,0.11); --accent:#8B79FF; --accent-soft:rgba(139,121,255,0.16); --accent-border:rgba(139,121,255,0.42);
+    --toggle-bg:rgba(255,255,255,0.09); --thumb-bg:#332F44; --header-bg:rgba(15,13,21,0.82); --float-bg:rgba(28,25,38,0.88);
+    --btn-bg:#6E56F0; --btn-fg:#FFFFFF; --dot-off:rgba(255,255,255,0.22);
+    --tint-warm:rgba(217,116,79,0.18); --tint-gold:rgba(200,154,53,0.18); --tint-green:rgba(31,157,99,0.18); }
+  ::selection{ background:rgba(110,86,240,0.18); }
+  a{ color:inherit; text-decoration:none; }
+  button{ -webkit-tap-highlight-color:transparent; font-family:inherit; cursor:pointer; }
+  .lid-fade{ opacity:1; }
+  @keyframes lidTxtA{ from{ opacity:.3; transform:translateX(14px); } to{ opacity:1; transform:none; } }
+  @keyframes lidTxtB{ from{ opacity:.3; transform:translateX(14px); } to{ opacity:1; transform:none; } }
+  @keyframes lidImgA{ from{ opacity:.4; transform:translateY(10px) scale(.985); } to{ opacity:1; transform:none; } }
+  @keyframes lidImgB{ from{ opacity:.4; transform:translateY(10px) scale(.985); } to{ opacity:1; transform:none; } }
+</style>
+</helmet>
+
+<div style="position:relative; overflow:hidden; width:100%;">
+
+<div style="position:absolute; top:-260px; right:-200px; width:760px; height:760px; border-radius:760px; background:radial-gradient(circle, rgba(110,86,240,0.16), transparent 62%); pointer-events:none; z-index:0;"></div>
+
+<!-- ============ HEADER ============ -->
+<header style="position:sticky; top:0; z-index:40; backdrop-filter:blur(18px) saturate(160%); -webkit-backdrop-filter:blur(18px) saturate(160%); background:var(--header-bg); border-bottom:0.5px solid var(--line);">
+  <div style="max-width:1180px; margin:0 auto; height:66px; padding:0 28px; display:flex; align-items:center; gap:20px;">
+    <a href="#top" style="display:flex; align-items:center; gap:10px;">
+      <span style="width:30px; height:30px; border-radius:30px; display:flex; align-items:center; justify-content:center; background:linear-gradient(150deg,#6e56f0,#9b86ff 55%,#1f9d63);">
+        <span style="width:10px; height:10px; border-radius:10px; background:rgba(255,255,255,0.94);"></span>
+      </span>
+      <span style="font:700 19px/1 ui-rounded,'SF Pro Rounded',-apple-system,system-ui; letter-spacing:-0.3px;">Lid</span>
+    </a>
+    <nav style="display:flex; gap:24px; margin-left:18px;">
+      <a href="#how" style="font:520 14.5px/1 -apple-system,system-ui; color:var(--text-3);">{{ c.nav_how }}</a>
+      <a href="#why" style="font:520 14.5px/1 -apple-system,system-ui; color:var(--text-3);">{{ c.nav_why }}</a>
+    </nav>
+    <div style="flex:1;"></div>
+    <div style="position:relative; display:flex; align-items:center; background:var(--toggle-bg); border-radius:999px; padding:3px; width:74px; height:34px;">
+      <div style="position:absolute; top:3px; left:3px; width:34px; height:28px; background:var(--thumb-bg); border-radius:999px; box-shadow:0 1px 3px rgba(0,0,0,0.18); transition:transform .26s cubic-bezier(.3,.7,.3,1); transform:{{ themeThumb }};"></div>
+      <button onClick="{{ setLight }}" aria-label="Light" style="position:relative; z-index:1; flex:1; height:28px; border:none; background:transparent; display:flex; align-items:center; justify-content:center; color:{{ lightColor }};">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.5 5.5l1.4 1.4M17.1 17.1l1.4 1.4M18.5 5.5l-1.4 1.4M6.9 17.1l-1.4 1.4"/></svg>
+      </button>
+      <button onClick="{{ setDark }}" aria-label="Dark" style="position:relative; z-index:1; flex:1; height:28px; border:none; background:transparent; display:flex; align-items:center; justify-content:center; color:{{ darkColor }};">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8Z"/></svg>
+      </button>
+    </div>
+    <div style="position:relative; display:flex; align-items:center; background:var(--toggle-bg); border-radius:999px; padding:3px; width:88px; height:34px;">
+      <div style="position:absolute; top:3px; left:3px; width:41px; height:28px; background:var(--thumb-bg); border-radius:999px; box-shadow:0 1px 3px rgba(26,23,34,0.12); transition:transform .26s cubic-bezier(.3,.7,.3,1); transform:{{ langThumb }};"></div>
+      <button onClick="{{ setEN }}" style="position:relative; z-index:1; flex:1; height:28px; border:none; background:transparent; font:600 13px/1 -apple-system,system-ui; color:{{ enColor }};">EN</button>
+      <button onClick="{{ setFR }}" style="position:relative; z-index:1; flex:1; height:28px; border:none; background:transparent; font:600 13px/1 -apple-system,system-ui; color:{{ frColor }};">FR</button>
+    </div>
+    <a href="#get" style="display:flex; align-items:center; gap:8px; height:40px; padding:0 18px; border-radius:999px; background:var(--btn-bg); color:var(--btn-fg);">
+      <span style="font:600 14px/1 -apple-system,system-ui;">{{ c.cta }}</span>
+    </a>
+  </div>
+</header>
+
+<div id="top"></div>
+
+<!-- ============ HERO A ============ -->
+<section data-screen-label="Hero A" style="position:relative; z-index:1; max-width:1180px; margin:0 auto; padding:84px 28px 84px; display:flex; align-items:center; gap:24px; flex-wrap:wrap;">
+  <div style="flex:1 1 330px; min-width:0; max-width:600px;">
+    <div style="display:inline-flex; align-items:center; gap:8px; height:34px; padding:0 15px; border-radius:999px; background:var(--accent-soft); margin-bottom:22px;">
+      <span style="width:7px; height:7px; border-radius:7px; background:var(--accent);"></span>
+      <span style="font:700 14px/1 -apple-system,system-ui; color:var(--accent); letter-spacing:0.2px;">{{ c.eyebrowA }}</span>
+    </div>
+    <h1 style="font:760 clamp(38px,5.2vw,62px)/1.02 ui-rounded,'SF Pro Rounded',-apple-system,system-ui; letter-spacing:-1.4px; margin:0 0 22px;">
+      <span style="color:var(--text);">{{ c.h1A_1 }}</span><br />
+      <span style="color:var(--accent);">{{ c.h1A_2 }}</span>
+    </h1>
+    <p style="font:420 clamp(16px,1.55vw,19px)/1.55 -apple-system,system-ui; color:var(--text-2); max-width:520px; margin:0 0 30px; text-wrap:pretty;">{{ c.subA }}</p>
+    <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+      <a href="#get" style="display:flex; align-items:center; gap:11px; height:56px; padding:0 24px; border-radius:16px; background:var(--btn-bg); color:var(--btn-fg); box-shadow:0 10px 28px rgba(26,23,34,0.22);">
+        <svg width="22" height="26" viewBox="0 0 24 24" fill="#fff" style="margin-top:-2px;"><path d="M17.05 12.04c-.03-2.6 2.13-3.85 2.22-3.91-1.21-1.77-3.09-2.01-3.76-2.04-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.89-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.88 2.65 3.22 2.6 1.29-.05 1.78-.83 3.34-.83 1.56 0 2 .83 3.37.81 1.39-.03 2.27-1.27 3.12-2.53.98-1.45 1.39-2.85 1.41-2.92-.03-.01-2.7-1.04-2.73-4.12zM14.6 4.5c.71-.86 1.19-2.06 1.06-3.25-1.02.04-2.26.68-2.99 1.54-.66.76-1.23 1.98-1.08 3.15 1.14.09 2.3-.58 3.01-1.44z"/></svg>
+        <span style="display:flex; flex-direction:column; align-items:flex-start; line-height:1;">
+          <span style="font:500 11px/1.3 -apple-system,system-ui; opacity:0.82;">{{ c.dlOn }}</span>
+          <span style="font:650 18px/1.1 ui-rounded,'SF Pro Rounded',-apple-system,system-ui; letter-spacing:-0.2px;">App Store</span>
+        </span>
+      </a>
+      <a href="#how" style="display:flex; align-items:center; gap:8px; height:56px; padding:0 22px; border-radius:16px; background:var(--surface); border:0.5px solid var(--line); box-shadow:0 1px 3px rgba(26,23,34,0.06); color:var(--text);">
+        <span style="font:600 15px/1 -apple-system,system-ui;">{{ c.ctaSecondary }}</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+    <div style="display:flex; align-items:center; gap:9px; margin-top:22px;">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1F9D63" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.2l2.6 2.6L16 9"/></svg>
+      <span style="font:500 14px/1 -apple-system,system-ui; color:var(--text-3);">{{ c.reassure }}</span>
+    </div>
+  </div>
+  <div style="flex:0 0 auto; display:flex; justify-content:center; position:relative;">
+    <div style="position:absolute; inset:auto; width:420px; height:420px; border-radius:420px; background:radial-gradient(circle, rgba(110,86,240,0.18), transparent 64%); z-index:0;"></div>
+    <div style="position:relative; z-index:1; width:484px; height:494px; max-width:100%; flex:none; background-image:url('landing-assets/01-screen.png'); background-repeat:no-repeat; background-size:909px 540px; background-position:-50px -46px; -webkit-mask-image:linear-gradient(180deg,#000 84%,transparent 99%); mask-image:linear-gradient(180deg,#000 84%,transparent 99%);"></div>
+  </div>
+</section>
+
+<!-- ============ PAINS ============ -->
+<section id="why" data-screen-label="Pains" style="position:relative; z-index:1; background:var(--surface); border-top:0.5px solid var(--line); border-bottom:0.5px solid var(--line);">
+  <div class="lid-fade" style="max-width:1180px; margin:0 auto; padding:84px 28px;">
+    <span style="font:800 19px/1 -apple-system,system-ui; color:var(--accent); letter-spacing:1.3px; text-transform:uppercase;">{{ c.painsKicker }}</span>
+    <h2 style="font:740 clamp(28px,3.7vw,44px)/1.1 ui-rounded,'SF Pro Rounded',-apple-system,system-ui; letter-spacing:-1px; margin:16px 0 0; max-width:760px; text-wrap:balance;">{{ c.painsTitle }}</h2>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; margin-top:44px;">
+      <div style="background:var(--surface-2); border:0.5px solid var(--line); border-radius:22px; padding:26px;">
+        <div style="width:44px; height:44px; border-radius:13px; background:var(--tint-warm); display:flex; align-items:center; justify-content:center; margin-bottom:18px;">
+          <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#D9744F" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5v14M5 19h14M9 19v-6M13 19V9M17 19v-4"/><path d="M16 6l3 3-3 3" opacity="0"/></svg>
+        </div>
+        <h3 style="font:650 18.5px/1.25 ui-rounded,'SF Pro Rounded',-apple-system,system-ui; letter-spacing:-0.3px; margin:0 0 8px;">{{ c.pain1t }}</h3>
+        <p style="font:430 15px/1.5 -apple-system,system-ui; color:var(--text-3); margin:0; text-wrap:pretty;">{{ c.pain1b }}</p>
+      </div>
+      <div style="background:var(--surface-2); border:0.5px solid var(--line); border-radius:22px; padding:26px;">
+        <div style="width:44px; height:44px; border-radius:13px; background:var(--accent-soft); display:flex; align-items:center; justify-content:center; margin-bottom:18px;">
+          <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12v17l-2-1.3-2 1.3-2-1.3-2 1.3-2-1.3-2 1.3V3.5Z"/><path d="M9 8h6M9 11.5h6M9 15h3"/></svg>
+        </div>
+        <h3 style="font:650 18.5px/1.25 ui-rounded,'SF Pro Rounded',-apple-system,system-ui; letter-spacing:-0.3px; margin:0 0 8px;">{{ c.pain2t }}</h3>
+        <p style="font:430 15px/1.5 -apple-system,system-ui; color:var(--text-3); margin:0; text-wrap:pretty;">{{ c.pain2b }}</p>
+      </div>
+      <div style="background:var(--surface-2); border:0.5px solid var(--line); border-radius:22px; padding:26px;">
+        <div style="width:44px; height:44px; border-radius:13px; background:var(--tint-gold); display:flex; align-items:center; justify-content:center; margin-bottom:18px;">
+          <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#C89A35" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 9v6M14 9v6"/></svg>
+        </div>
+        <h3 style="font:650 18.5px/1.25 ui-rounded,'SF Pro Rounded',-apple-system,system-ui; letter-spacing:-0.3px; margin:0 0 8px;">{{ c.pain3t }}</h3>
+        <p style="font:430 15px/1.5 -apple-system,system-ui; color:var(--text-3); margin:0; text-wrap:pretty;">{{ c.pain3b }}</p>
+      </div>
+    </div>
+
+    <!-- contrast: statement vs Lid -->
+    <div style="margin-top:52px; display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:18px; align-items:stretch;">
+      <div style="background:var(--surface-3); border:0.5px solid var(--line); border-radius:22px; padding:24px;">
+        <div style="font:600 11.5px/1 -apple-system,system-ui; color:var(--text-4); letter-spacing:1.2px; margin-bottom:16px;">{{ c.stmtLabel }}</div>
+        <div style="display:flex; flex-direction:column; gap:0;">
+          <div style="display:flex; justify-content:space-between; padding:11px 0; border-bottom:0.5px solid var(--line); font:500 14.5px/1 'SF Mono',ui-monospace,monospace; color:var(--text-3);"><span>UBER EATS</span><span>−$28.40</span></div>
+          <div style="display:flex; justify-content:space-between; padding:11px 0; border-bottom:0.5px solid var(--line); font:500 14.5px/1 'SF Mono',ui-monospace,monospace; color:var(--text-3);"><span>AMZN MKTP</span><span>−$64.00</span></div>
+          <div style="display:flex; justify-content:space-between; padding:11px 0; border-bottom:0.5px solid var(--line); font:500 14.5px/1 'SF Mono',ui-monospace,monospace; color:var(--text-3);"><span>TIM HORTONS</span><span>−$4.85</span></div>
+          <div style="display:flex; justify-content:space-between; padding:11px 0; font:500 14.5px/1 'SF Mono',ui-monospace,monospace; color:var(--text-3);"><span>PRESTO</span><span>−$3.35</span></div>
+        </div>
+        <div style="margin-top:16px; font:500 14px/1.4 -apple-system,system-ui; color:var(--text-4); font-style:italic;">{{ c.stmtFoot }}</div>
+      </div>
+      <div style="background:var(--surface); border:0.5px solid var(--accent-border); border-radius:22px; padding:24px; box-shadow:0 14px 40px rgba(110,86,240,0.1); display:flex; flex-direction:column;">
+        <div style="display:flex; align-items:center; gap:9px; margin-bottom:16px;">
+          <span style="width:26px; height:26px; border-radius:26px; display:flex; align-items:center; justify-content:center; background:linear-gradient(150deg,#6e56f0,#9b86ff 55%,#1f9d63);"><span style="width:8px; height:8px; border-radius:8px; background:rgba(255,255,255,0.94);"></span></span>
+          <span style="font:680 14px/1 ui-rounded,'SF Pro Rounded',-apple-system,system-ui;">Lid</span>
+        </div>
+        <div style="font:460 17px/1.5 -apple-system,system-ui; color:var(--text); text-wrap:pretty; flex:1;">{{ c.lidInsight }}</div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:26px; font:600 clamp(16px,2vw,20px)/1.4 ui-rounded,'SF Pro Rounded',-apple-system,system-ui; color:var(--text); letter-spacing:-0.4px;">{{ c.contrastCap }}</div>
+  </div>
+</section>
+
+<!-- ============ BENEFITS ============ -->
+<section style="position:relative; z-index:1;">
+  <div class="lid-fade" style="max-width:1180px; margin:0 auto; padding:84px 28px 84px;">
+    <div style="text-align:center; max-width:680px; margin:0 auto;">
+      <span style="font:800 19px/1 -apple-system,system-ui; color:var(--accent); letter-spacing:1.3px; text-transform:uppercase;">{{ c.benKicker }}</span>
+      <h2 style="font:740 clamp(28px,3.7vw,44px)/1.1 ui-rounded,'SF Pro Rounded',-apple-system,system-ui; letter-spacing:-1px; margin:16px 0 14px; text-wrap:balance;">{{ c.benTitle }}</h2>
+      <p style="font:430 clamp(15px,1.5vw,18px)/1.55 -apple-system,system-ui; color:var(--text-3); margin:0; text-wrap:pretty;">{{ c.benSub }}</p>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(248px,1fr)); gap:18px; margin-top:48px;">
+      <div style="background:var(--surface); border:0.5px solid var(--line); border-radius:22px; padding:28px; box-shadow:0 1px 3px rgba(26,23,34,0.05);">
+        <div style="width:48px; height:48px; border-radius:14px; background:var(--accent-soft); display:flex; align-items:center; justify-content:center; margin-bottom:20px;">
+          <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5h16v10a1.5 1.5 0 0 1-1.5 1.5H9l-4 3.5V5.5Z"/></svg>
+        </div>
+        <h3 style="font:660 19px/1.2 ui-rounded,'SF Pro Rounded',-apple-system,system-ui; letter-spacing:-0.3px; margin:0 0 9px;">{{ c.ben1t }}</h3>
+        <p style="font:430 15px/1.55 -apple-system,system-ui; color:var(--text-3); margin:0; text-wrap:pretty;">{{ c.ben1b }}</p>
+      </div>
+      <div style="background:var(--surface); border:0.5px solid var(--line); border-radius:22px; padding:28px; box-shadow:0 1px 3px rgba(26,23,34,0.05);">
+        <div style="width:48px; height:48px; border-radius:14px; background:var(--tint-green); display:flex; align-items:center; justify-content:center; margin-bottom:20px;">
+          <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#1F9D63" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6H17a2 2 0 0 1 2 2v1H6.5"/><path d="M19 9v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8.5"/><circle cx="16.5" cy="13" r="1.1" fill="#1F9D63" stroke="#1F9D63"/></svg>
+        </div>
+        <h3 style="font:660 19px/1.2 ui-rounded,'SF Pro Rounded',-apple-system,system-ui; letter-spacing:-0.3px; margin:0 0 9px;">{{ c.ben2t }}</h3>
+        <p style="font:430 15px/1.55 -apple-system,system-ui; color:var(--text-3); margin:0; text-wrap:pretty;">{{ c.ben2b }}</p>
+      </div>
+      <div style="background:var(--surface); border:0.5px solid var(--line); border-radius:22px; padding:28px; box-shadow:0 1px 3px rgba(26,23,34,0.05);">
+        <div style="width:48px; height:48px; border-radius:14px; background:var(--accent-soft); display:flex; align-items:center; justify-content:center; margin-bottom:20px;">
+          <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.6"/><circle cx="12" cy="12" r="0.6" fill="var(--accent)"/></svg>
+        </div>
+        <h3 style="font:660 19px/1.2 ui-rounded,'SF Pro Rounded',-apple-system,system-ui; letter-spacing:-0.3px; margin:0 0 9px;">{{ c.ben3t }}</h3>
+        <p style="font:430 15px/1.55 -apple-system,system-ui; color:var(--text-3); margin:0; text-wrap:pretty;">{{ c.ben3b }}</p>
+      </div>
+      <div style="background:var(--surface); border:0.5px solid var(--line); border-radius:22px; padding:28px; box-shadow:0 1px 3px rgba(26,23,34,0.05);">
+        <div style="width:48px; height:48px; border-radius:14px; background:var(--tint-gold); display:flex; align-items:center; justify-content:center; margin-bottom:20px;">
+          <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#C89A35" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4M6 4.5h10l-2 3 2 3H6"/></svg>
+        </div>
+        <h3 style="font:660 19px/1.2 ui-rounded,'SF Pro Rounded',-apple-system,system-ui; letter-spacing:-0.3px; margin:0 0 9px;">{{ c.ben4t }}</h3>
+        <p style="font:430 15px/1.55 -apple-system,system-ui; color:var(--text-3); margin:0; text-wrap:pretty;">{{ c.ben4b }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section id="how" data-screen-label="How it works" style="position:relative; z-index:1; background:var(--surface); border-top:0.5px solid var(--line);">
+  <div style="max-width:1180px; margin:0 auto; padding:84px 28px 40px;">
+    <div class="lid-fade" style="text-align:center; max-width:720px; margin:0 auto 12px;">
+      <span style="font:800 19px/1 -apple-system,system-ui; color:var(--accent); letter-spacing:1.3px; text-transform:uppercase;">{{ c.hiwKicker }}</span>
+      <div style="margin:18px 0 14px; display:flex; flex-direction:column; align-items:center; gap:3px;">
+        <span style="font:500 clamp(17px,1.9vw,23px)/1.1 ui-rounded,'SF Pro Rounded',-apple-system,system-ui; color:var(--text-4); letter-spacing:-0.2px;">{{ c.hiwL1 }}</span>
+        <span style="font:740 clamp(27px,3.7vw,44px)/1.08 ui-rounded,'SF Pro Rounded',-apple-system,system-ui; letter-spacing:-1px; color:var(--text); text-wrap:balance;">{{ c.hiwQ1 }}</span>
+        <span style="font:500 clamp(17px,1.9vw,23px)/1.1 ui-rounded,'SF Pro Rounded',-apple-system,system-ui; color:var(--text-4); letter-spacing:-0.2px; margin-top:4px;">{{ c.hiwL2 }}</span>
+        <span style="font:740 clamp(27px,3.7vw,44px)/1.08 ui-rounded,'SF Pro Rounded',-apple-system,system-ui; letter-spacing:-1px; color:var(--accent); text-wrap:balance;">{{ c.hiwQ2 }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP SLIDER -->
+  <div style="max-width:1180px; margin:0 auto; padding:24px 28px 84px;">
+    <div style="position:relative; background:var(--surface-2); border:0.5px solid var(--line); border-radius:30px; padding:clamp(24px,3.2vw,40px) clamp(22px,3vw,40px) clamp(22px,2.6vw,32px); display:flex; flex-direction:column;">
+      <!-- left arrow (hangs at the card's left edge) -->
+      <button onClick="{{ prev }}" aria-label="Previous" style="position:absolute; left:-18px; top:50%; transform:translateY(-50%); width:50px; height:50px; border-radius:50px; border:0.5px solid var(--line); background:var(--surface); box-shadow:0 4px 14px rgba(26,23,34,0.12); display:flex; align-items:center; justify-content:center; z-index:3;" style-hover="background:#F2EEFF; border-color:rgba(110,86,240,0.4);">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+      </button>
+      <!-- right arrow (hangs at the card's right edge) -->
+      <button onClick="{{ next }}" aria-label="Next" style="position:absolute; right:-18px; top:50%; transform:translateY(-50%); width:50px; height:50px; border-radius:50px; border:none; background:var(--btn-bg); box-shadow:0 8px 20px rgba(26,23,34,0.26); display:flex; align-items:center; justify-content:center; z-index:3;" style-hover="background:var(--accent);">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+      <!-- content row -->
+      <div style="display:flex; align-items:center; gap:clamp(20px,3vw,48px); flex-wrap:wrap; min-height:452px;">
+        <!-- text column -->
+        <div style="flex:1 1 320px; min-width:0;">
+          <div style="animation-duration:.42s; animation-timing-function:cubic-bezier(.2,.7,.2,1); animation-fill-mode:both; animation-name:{{ stepTextAnim }};">
+            <div style="font:700 18px/1 ui-rounded,'SF Pro Rounded',-apple-system,system-ui; color:var(--accent); letter-spacing:0.4px; margin-bottom:16px;">{{ stepTag }}</div>
+            <h3 style="font:720 clamp(25px,3vw,36px)/1.12 ui-rounded,'SF Pro Rounded',-apple-system,system-ui; letter-spacing:-0.7px; margin:0 0 16px; text-wrap:balance; min-height:1.12em;">{{ stepTitle }}</h3>
+            <p style="font:430 clamp(15px,1.5vw,17.5px)/1.6 -apple-system,system-ui; color:var(--text-2); margin:0; max-width:460px; text-wrap:pretty;">{{ stepBody }}</p>
+          </div>
+        </div>
+        <!-- phone column -->
+        <div style="flex:0 0 auto; display:flex; justify-content:center; width:443px; max-width:100%;">
+          <div style="width:443px; height:452px; max-width:100%; flex:none; background-image:{{ stepImg }}; background-repeat:no-repeat; background-size:832px 494px; background-position:-46px -42px; -webkit-mask-image:linear-gradient(180deg,#000 84%,transparent); mask-image:linear-gradient(180deg,#000 84%,transparent); animation-duration:.5s; animation-timing-function:cubic-bezier(.2,.7,.2,1); animation-fill-mode:both; animation-name:{{ stepImgAnim }};"></div>
+        </div>
+      </div>
+      <!-- dots (bottom, centered) -->
+      <div style="display:flex; align-items:center; justify-content:center; gap:9px; margin-top:8px;">
+        <sc-for list="{{ dots }}" as="dot" hint-placeholder-count="5">
+          <button onClick="{{ dot.go }}" aria-label="Go to step" style="width:{{ dot.w }}; height:9px; border-radius:9px; border:none; padding:0; background:{{ dot.color }}; transition:width .26s cubic-bezier(.3,.7,.3,1), background .2s; cursor:pointer;"></button>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL OFFER + CTA ============ -->
+<section id="get" data-screen-label="Final CTA" style="position:relative; z-index:1; padding:0;">
+  <div class="lid-fade" style="max-width:1180px; margin:0 auto; padding:84px 28px 84px;">
+    <div style="position:relative; overflow:hidden; border-radius:34px; background:linear-gradient(155deg,#211E2B,#16141D 60%,#0E0D13); border:0.5px solid rgba(255,255,255,0.07); padding:clamp(40px,6vw,76px) clamp(28px,5vw,68px);">
+      <div style="position:absolute; top:-160px; right:-120px; width:560px; height:560px; border-radius:560px; background:radial-gradient(circle, rgba(139,121,255,0.34), transparent 62%); pointer-events:none;"></div>
+      <div style="position:relative; max-width:640px;">
+        <span style="font:700 15px/1 -apple-system,system-ui; color:#B7A6FF; letter-spacing:1.6px; text-transform:uppercase;">{{ c.offerKicker }}</span>
+        <h2 style="font:760 clamp(30px,4.2vw,50px)/1.08 ui-rounded,'SF Pro Rounded',-apple-system,system-ui; letter-spacing:-1.2px; color:#F4F3F7; margin:16px 0 16px; text-wrap:balance;">{{ c.offerTitle }}</h2>
+        <p style="font:430 clamp(16px,1.6vw,19px)/1.55 -apple-system,system-ui; color:#A8A4B5; margin:0 0 30px; max-width:520px; text-wrap:pretty;">{{ c.offerSub }}</p>
+        <div style="display:flex; flex-direction:column; gap:13px; margin-bottom:36px;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#46D196" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.2l2.6 2.6L16 9"/></svg>
+            <span style="font:480 16px/1.4 -apple-system,system-ui; color:#F4F3F7;">{{ c.offer1 }}</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#46D196" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.2l2.6 2.6L16 9"/></svg>
+            <span style="font:480 16px/1.4 -apple-system,system-ui; color:#F4F3F7;">{{ c.offer2 }}</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#46D196" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.2l2.6 2.6L16 9"/></svg>
+            <span style="font:480 16px/1.4 -apple-system,system-ui; color:#F4F3F7;">{{ c.offer3 }}</span>
+          </div>
+        </div>
+        <a href="#" style="display:inline-flex; align-items:center; gap:12px; height:60px; padding:0 28px; border-radius:17px; background:#FFFFFF; color:#161420; box-shadow:0 12px 34px rgba(0,0,0,0.34);">
+          <svg width="24" height="28" viewBox="0 0 24 24" fill="#161420" style="margin-top:-2px;"><path d="M17.05 12.04c-.03-2.6 2.13-3.85 2.22-3.91-1.21-1.77-3.09-2.01-3.76-2.04-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.89-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.88 2.65 3.22 2.6 1.29-.05 1.78-.83 3.34-.83 1.56 0 2 .83 3.37.81 1.39-.03 2.27-1.27 3.12-2.53.98-1.45 1.39-2.85 1.41-2.92-.03-.01-2.7-1.04-2.73-4.12zM14.6 4.5c.71-.86 1.19-2.06 1.06-3.25-1.02.04-2.26.68-2.99 1.54-.66.76-1.23 1.98-1.08 3.15 1.14.09 2.3-.58 3.01-1.44z"/></svg>
+          <span style="display:flex; flex-direction:column; align-items:flex-start; line-height:1;">
+            <span style="font:500 11.5px/1.3 -apple-system,system-ui; opacity:0.7;">{{ c.dlOn }}</span>
+            <span style="font:680 19px/1.1 ui-rounded,'SF Pro Rounded',-apple-system,system-ui; letter-spacing:-0.2px;">App Store</span>
+          </span>
+        </a>
+        <div style="margin-top:18px; font:500 13.5px/1 -apple-system,system-ui; color:#6F6B7C;">{{ c.micro }}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer style="position:relative; z-index:1; border-top:0.5px solid var(--line);">
+  <div style="max-width:1180px; margin:0 auto; padding:36px 28px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+    <span style="width:26px; height:26px; border-radius:26px; display:flex; align-items:center; justify-content:center; background:linear-gradient(150deg,#6e56f0,#9b86ff 55%,#1f9d63);"><span style="width:8px; height:8px; border-radius:8px; background:rgba(255,255,255,0.94);"></span></span>
+    <span style="font:680 16px/1 ui-rounded,'SF Pro Rounded',-apple-system,system-ui;">Lid</span>
+    <span style="font:430 14px/1 -apple-system,system-ui; color:var(--text-4);">— Expense Coach</span>
+    <span style="flex:1;"></span>
+    <span style="font:430 13.5px/1 -apple-system,system-ui; color:var(--text-4);">{{ c.footTag }}</span>
+    <span style="font:430 13.5px/1 -apple-system,system-ui; color:var(--text-5);">© 2026</span>
+  </div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const DICT = {
+  en: {
+    nav_how:'How it works', nav_why:'Why Lid', cta:'Get the app', dlOn:'Download on the',
+    eyebrowA:'AI money coach · iPhone',
+    h1A_1:'You earn fine.', h1A_2:'So where’s it gone by month’s end?',
+    subA:'Your bank statement shows the amounts — never the answer. Lid is an AI coach that logs every dollar by chat and tells you, in plain words, why the money’s gone.',
+    eyebrowB:'Meet Lid · AI money coach',
+    h1B_1:'One honest number:', h1B_2:'what’s safe to spend today.',
+    subB:'Lid sets aside rent, groceries and your savings first — then shows you a single number for today. No spreadsheets. Just a coach in your pocket.',
+    ctaSecondary:'See how it works', reassure:'Free to start · Sets up in 3 minutes',
+    painsKicker:'Sound familiar?',
+    painsTitle:'It’s not that you’re bad with money. There’s just no system.',
+    pain1t:'Payday feels great. Month’s end doesn’t.', pain1b:'Good month or bad, the balance still ends near zero.',
+    pain2t:'The money’s gone — and you can’t say where.', pain2b:'“Why again?” The statement lists amounts, never reasons.',
+    pain3t:'You know what to do. You just… don’t.', pain3b:'And you carry a quiet little shame about it.',
+    stmtLabel:'YOUR BANK STATEMENT', stmtFoot:'…so? why again?',
+    lidInsight:'Deliveries are up 52% this month — almost all on weeknights. Long week? Want a cap on “Eating out”?',
+    contrastCap:'Same data. Only one of them actually helps.',
+    benKicker:'Why Lid',
+    benTitle:'A money app that finally feels human',
+    benSub:'No budgets to babysit. No guilt. Just a coach that does the work and talks like a person.',
+    ben1t:'Log like texting', ben1b:'Type it, snap the receipt, or say it out loud. Lid sorts every dollar for you.',
+    ben2t:'Every dollar gets a job', ben2b:'Lid builds envelopes for rent, groceries, taxes and your buffer — automatically.',
+    ben3t:'A goal you can see', ben3b:'Lid suggests a goal and shows how close you are — in human milestones, not points and badges.',
+    ben4t:'Built for income that jumps', ben4b:'Freelance or seasonal? Lid plans around your real balance, after every payment.',
+    hiwKicker:'How it works',
+    hiwL1:'From', hiwQ1:'“Where did it go?”', hiwL2:'to', hiwQ2:'“I’ve got this”',
+    hiwSub:'Five small moments. That’s the whole app.',
+    step1tag:'01 · Setup', step1t:'A 3-minute chat, not a setup form', step1b:'Lid asks how money comes in and what’s stressing you — then builds your accounts and a first goal from your answers. You just tap “ok”.',
+    step2tag:'02 · Capture', step2t:'Add an expense like a text', step2b:'“Coffee 4.85.” Lid gets it, files it to the right envelope, and confirms — no forms, no categories to pick.',
+    step3tag:'03 · Receipts', step3t:'Snap it, Lid splits it', step3b:'Photograph a receipt and Lid reads every line, sorting groceries and everyday spending into the right places.',
+    step4tag:'04 · Clarity', step4t:'See where it actually went', step4b:'Plain-language insights on top of simple charts: what changed, when, and the very human reason behind it.',
+    step5tag:'05 · Check-in', step5t:'A two-minute weekly review', step5b:'Every Sunday, the short version of your week — wins first. Lid remembers, and follows up the next week.',
+    offerKicker:'Start today',
+    offerTitle:'Finally see where your money goes — and save your first $5,000 in 6 months.',
+    offerSub:'Download Lid, answer a few questions by chat, and watch it build your plan. Free to start.',
+    offer1:'Set up in 3 minutes, just by chatting', offer2:'Every dollar tracked, automatically', offer3:'A coach that nudges — never nags',
+    micro:'iPhone · Free to start · No spreadsheets, ever',
+    footTag:'Your AI money coach.', heroLabel:'First screen',
+  },
+  fr: {
+    nav_how:'Comment ça marche', nav_why:'Pourquoi Lid', cta:'Obtenir l’app', dlOn:'Télécharger sur l’',
+    eyebrowA:'Coach financier IA · iPhone',
+    h1A_1:'Tu gagnes bien ta vie.', h1A_2:'Alors où passe l’argent avant la fin du mois ?',
+    subA:'Ton relevé bancaire montre les montants — jamais la raison. Lid est un coach IA qui note chaque dollar par message et t’explique, simplement, où l’argent est parti.',
+    eyebrowB:'Voici Lid · Coach financier IA',
+    h1B_1:'Un seul chiffre honnête :', h1B_2:'ce que tu peux dépenser aujourd’hui.',
+    subB:'Lid met de côté le loyer, l’épicerie et ton épargne d’abord — puis t’affiche un seul chiffre pour aujourd’hui. Aucun tableur. Juste un coach dans ta poche.',
+    ctaSecondary:'Voir comment ça marche', reassure:'Gratuit au départ · Prêt en 3 minutes',
+    painsKicker:'Ça te parle ?',
+    painsTitle:'Ce n’est pas que tu gères mal l’argent. Il manque juste un système.',
+    pain1t:'La paie fait du bien. La fin du mois, moins.', pain1b:'Bon mois ou mauvais mois, le solde finit près de zéro.',
+    pain2t:'L’argent a disparu — impossible de dire où.', pain2b:'« Encore ? » Le relevé liste des montants, jamais des raisons.',
+    pain3t:'Tu sais quoi faire. Mais tu ne le fais pas.', pain3b:'Et tu traînes une petite honte silencieuse.',
+    stmtLabel:'TON RELEVÉ BANCAIRE', stmtFoot:'…et donc ? pourquoi encore ?',
+    lidInsight:'Les livraisons ont bondi de 52 % ce mois-ci — presque toutes en soirée de semaine. Grosse semaine ? On plafonne le « resto » ?',
+    contrastCap:'Mêmes données. Une seule aide vraiment.',
+    benKicker:'Pourquoi Lid',
+    benTitle:'Une app de finances enfin humaine',
+    benSub:'Aucun budget à surveiller. Aucune culpabilité. Juste un coach qui fait le travail et parle comme une vraie personne.',
+    ben1t:'Noter comme un texto', ben1b:'Écris-le, photographie le reçu ou dis-le. Lid classe chaque dollar pour toi.',
+    ben2t:'Chaque dollar a un rôle', ben2b:'Lid crée des enveloppes pour le loyer, l’épicerie, les impôts et ton coussin — automatiquement.',
+    ben3t:'Un objectif visible', ben3b:'Lid propose un objectif et montre où tu en es — en jalons humains, pas en points ni badges.',
+    ben4t:'Pensé pour les revenus variables', ben4b:'Pigiste ou saisonnier ? Lid planifie selon ton vrai solde, après chaque paiement.',
+    hiwKicker:'Comment ça marche',
+    hiwL1:'De', hiwQ1:'« où est passé l’argent ? »', hiwL2:'à', hiwQ2:'« je gère »',
+    hiwSub:'Cinq petits moments. C’est toute l’app.',
+    step1tag:'01 · Départ', step1t:'Une conversation de 3 minutes, pas un formulaire', step1b:'Lid demande comment l’argent rentre et ce qui te stresse — puis crée tes comptes et un premier objectif à partir de tes réponses. Tu n’as qu’à approuver.',
+    step2tag:'02 · Saisie', step2t:'Ajoute une dépense comme un message', step2b:'« Café 4,85 ». Lid comprend, range dans la bonne enveloppe et confirme — aucun formulaire, aucune catégorie à choisir.',
+    step3tag:'03 · Reçus', step3t:'Photographie, Lid répartit', step3b:'Prends un reçu en photo : Lid lit chaque ligne et trie épicerie et dépenses courantes au bon endroit.',
+    step4tag:'04 · Clarté', step4t:'Vois où l’argent est vraiment allé', step4b:'Des constats en langage clair par-dessus des graphiques simples : ce qui a changé, quand, et la raison bien humaine derrière.',
+    step5tag:'05 · Bilan', step5t:'Un bilan hebdo de deux minutes', step5b:'Chaque dimanche, la version courte de ta semaine — les bons coups d’abord. Lid s’en souvient et fait un suivi.',
+    offerKicker:'Commence aujourd’hui',
+    offerTitle:'Comprends enfin où va ton argent — et mets de côté tes premiers 5 000 $ en 6 mois.',
+    offerSub:'Télécharge Lid, réponds à quelques questions par message et regarde-le bâtir ton plan. Gratuit au départ.',
+    offer1:'Prêt en 3 minutes, juste en discutant', offer2:'Chaque dollar suivi, automatiquement', offer3:'Un coach qui rappelle — sans harceler',
+    micro:'iPhone · Gratuit au départ · Jamais de tableur',
+    footTag:'Ton coach financier IA.', heroLabel:'Premier écran',
+  },
+  ru: {
+    nav_how:'Как это работает', nav_why:'Почему Lid', cta:'Скачать', dlOn:'Загрузить в',
+    eyebrowA:'AI-коуч по деньгам · iPhone',
+    h1A_1:'Зарабатываешь нормально.', h1A_2:'А к концу месяца на счёте пусто?',
+    subA:'Банковская выписка показывает суммы — но не ответ. Lid — это AI-коуч: записывает каждый рубль прямо в чате и по-человечески объясняет, куда снова делись деньги.',
+    eyebrowB:'Знакомься, Lid · AI-коуч по деньгам',
+    h1B_1:'Одна честная цифра:', h1B_2:'сколько можно потратить сегодня.',
+    subB:'Lid сначала откладывает на аренду, продукты и твою подушку — а потом показывает одну цифру на сегодня. Никаких таблиц. Просто коуч в кармане.',
+    ctaSecondary:'Посмотреть, как работает', reassure:'Бесплатно для старта · Настройка за 3 минуты',
+    painsKicker:'Знакомо?',
+    painsTitle:'Дело не в том, что ты не умеешь с деньгами. Просто нет системы.',
+    pain1t:'Зарплата — кайф. Конец месяца — нет.', pain1b:'Месяц хороший или плохой — баланс всё равно у нуля.',
+    pain2t:'Деньги ушли — а куда, не скажешь.', pain2b:'«Опять?» Выписка показывает суммы, но не причины.',
+    pain3t:'Ты знаешь, как надо. Просто делаешь наоборот.', pain3b:'И носишь за это тихий стыд.',
+    stmtLabel:'ТВОЯ БАНКОВСКАЯ ВЫПИСКА', stmtFoot:'…и что? почему опять?',
+    lidInsight:'Доставки выросли на 52% за месяц — почти всё по будням вечером. Тяжёлая неделя? Поставим лимит на «Еду вне дома»?',
+    contrastCap:'Одни и те же данные. Помогает только одно.',
+    benKicker:'Почему Lid',
+    benTitle:'Приложение о деньгах, которое наконец по-человечески',
+    benSub:'Никаких бюджетов, за которыми надо следить. Без чувства вины. Просто коуч, который делает работу и говорит как человек.',
+    ben1t:'Записывай как сообщение другу', ben1b:'Напиши, сфоткай чек или скажи голосом. Lid сам разложит каждый рубль.',
+    ben2t:'У каждого рубля своя задача', ben2b:'Lid сам создаёт конверты на аренду, продукты, налоги и подушку — автоматически.',
+    ben3t:'Цель, которую видно', ben3b:'Lid предложит цель и покажет, насколько ты близко — по-человечески, без баллов и значков.',
+    ben4t:'Сделан для плавающего дохода', ben4b:'Фриланс или сезон? Lid планирует от твоего реального баланса — после каждой выплаты.',
+    hiwKicker:'Как это работает',
+    hiwL1:'От', hiwQ1:'«куда ушли деньги?»', hiwL2:'к', hiwQ2:'«я держу всё под контролем»',
+    hiwSub:'Пять маленьких моментов. Это всё приложение.',
+    step1tag:'01 · Старт', step1t:'Разговор на 3 минуты, а не анкета', step1b:'Lid спросит, как приходят деньги и что тревожит — и сам создаст счета и первую цель из твоих ответов. Тебе остаётся нажать «ок».',
+    step2tag:'02 · Запись', step2t:'Добавь трату как сообщение', step2b:'«Кофе 350». Lid поймёт, положит в нужный конверт и подтвердит — без форм и выбора категорий.',
+    step3tag:'03 · Чеки', step3t:'Сфоткай — Lid разложит', step3b:'Сфотографируй чек, и Lid прочитает каждую строку, разложив продукты и повседневное по местам.',
+    step4tag:'04 · Ясность', step4t:'Увидь, куда реально ушли деньги', step4b:'Понятные выводы поверх простых графиков: что изменилось, когда и по какой человеческой причине.',
+    step5tag:'05 · Итоги', step5t:'Недельный разбор на две минуты', step5b:'Каждое воскресенье — короткая версия недели, сначала победы. Lid запомнит и спросит на следующей неделе.',
+    offerKicker:'Начни сегодня',
+    offerTitle:'Наконец поймёшь, куда уходят деньги — и накопишь первые $5000 за 6 месяцев.',
+    offerSub:'Скачай Lid, ответь на пару вопросов в чате и смотри, как он строит твой план. Бесплатно для старта.',
+    offer1:'Настройка за 3 минуты, просто в чате', offer2:'Каждый рубль учтён автоматически', offer3:'Коуч, который напоминает — а не пилит',
+    micro:'iPhone · Бесплатно для старта · Никаких таблиц',
+    footTag:'Твой AI-коуч по деньгам.', heroLabel:'Первый экран',
+  },
+};
+
+class Component extends DCLogic {
+  state = { lang: 'fr', hero: 'A', step: 0, theme: 'light' };
+
+  componentDidMount(){ this._applyTheme(); }
+  componentDidUpdate(){ this._applyTheme(); }
+  _applyTheme(){ try { document.body.setAttribute('data-theme', this.state.theme); } catch (e) {} }
+
+  renderVals() {
+    const { lang, hero, theme } = this.state;
+    const c = DICT[lang];
+    const N = 5;
+    const steps = [
+      { tag: c.step1tag, t: c.step1t, b: c.step1b, img: '03-screen' },
+      { tag: c.step2tag, t: c.step2t, b: c.step2b, img: '01-screen' },
+      { tag: c.step3tag, t: c.step3t, b: c.step3b, img: '04-screen' },
+      { tag: c.step4tag, t: c.step4t, b: c.step4b, img: '07-screen' },
+      { tag: c.step5tag, t: c.step5t, b: c.step5b, img: '06-screen' },
+    ];
+    const i = ((this.state.step % N) + N) % N;
+    const s = steps[i];
+    const dots = steps.map((_, idx) => ({
+      color: idx === i ? 'var(--accent)' : 'var(--dot-off)',
+      w: idx === i ? '24px' : '8px',
+      go: () => this.setState({ step: idx }),
+    }));
+    return {
+      c,
+      lang, hero,
+      stepTextAnim: i % 2 === 0 ? 'lidTxtA' : 'lidTxtB',
+      stepImgAnim: i % 2 === 0 ? 'lidImgA' : 'lidImgB',
+      stepTag: s.tag, stepTitle: s.t, stepBody: s.b,
+      stepImg: "url('landing-assets/" + s.img + ".png')",
+      stepCounter: '0' + (i + 1) + ' / 0' + N,
+      dots,
+      prev: () => this.setState(st => ({ step: ((st.step - 1) % N + N) % N })),
+      next: () => this.setState(st => ({ step: (st.step + 1) % N })),
+      isHeroA: hero === 'A', isHeroB: hero === 'B',
+      setEN: () => this.setState({ lang: 'en' }),
+      setFR: () => this.setState({ lang: 'fr' }),
+      setRU: () => this.setState({ lang: 'ru' }),
+      ruColor: lang === 'ru' ? 'var(--text)' : 'var(--text-4)',
+      setLight: () => this.setState({ theme: 'light' }),
+      setDark: () => this.setState({ theme: 'dark' }),
+      themeThumb: theme === 'light' ? 'translateX(0%)' : 'translateX(100%)',
+      lightColor: theme === 'light' ? 'var(--accent)' : 'var(--text-4)',
+      darkColor: theme === 'dark' ? 'var(--accent)' : 'var(--text-4)',
+      setHeroA: () => this.setState({ hero: 'A' }),
+      setHeroB: () => this.setState({ hero: 'B' }),
+      langThumb: lang === 'en' ? 'translateX(0%)' : 'translateX(100%)',
+      heroThumb: hero === 'A' ? 'translateX(0%)' : 'translateX(100%)',
+      enColor: lang === 'en' ? 'var(--text)' : 'var(--text-4)',
+      frColor: lang === 'fr' ? 'var(--text)' : 'var(--text-4)',
+      aColor: hero === 'A' ? '#FFFFFF' : 'var(--text-3)',
+      bColor: hero === 'B' ? '#FFFFFF' : 'var(--text-3)',
+    };
+  }
+}
+</script>
+<template id="__bundler_thumbnail">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <rect width="100" height="100" rx="24" fill="#6E56F0"/>
+    <g transform="translate(30 30)">
+      <path d="M4 0h6v34H4z" fill="#fff"/>
+      <circle cx="30" cy="9" r="5" fill="#fff"/>
+      <path d="M25 18h10v16H25z" fill="#fff"/>
+    </g>
+  </svg>
+</template>
+</body>
+</html>
