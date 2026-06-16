@@ -8,7 +8,6 @@
 <body>
 <x-dc>
 <helmet>
-<script src="landing-assets/screens.js"></script>
 <style>
   *{ -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; box-sizing:border-box; }
   html{ scroll-behavior:smooth; }
@@ -37,6 +36,7 @@
   @media (max-width:960px){
     .lid-hero{ flex-wrap:wrap !important; justify-content:center; }
     .lid-hero-visual{ display:none !important; }
+    .lid-cta-visual{ display:none !important; }
   }
   @media (max-width:680px){
     .lid-nav{ display:none !important; }
@@ -92,7 +92,7 @@
 
 <!-- ============ HERO A ============ -->
 <section data-screen-label="Hero A" class="lid-hero" style="position:relative; z-index:1; max-width:1180px; margin:0 auto; padding:84px 28px 84px; display:flex; align-items:center; gap:32px; flex-wrap:nowrap;">
-  <div style="flex:1 1 auto; min-width:0; max-width:600px;">
+  <div style="flex:1 1 auto; min-width:0; max-width:740px;">
     <div style="display:inline-flex; align-items:center; gap:8px; height:34px; padding:0 15px; border-radius:999px; background:var(--accent-soft); margin-bottom:22px;">
       <span style="width:7px; height:7px; border-radius:7px; background:var(--accent);"></span>
       <span style="font:700 14px/1 -apple-system,system-ui; color:var(--accent); letter-spacing:0.2px;">{{ c.eyebrowA }}</span>
@@ -120,9 +120,11 @@
       <span style="font:500 14px/1 -apple-system,system-ui; color:var(--text-3);">{{ c.reassure }}</span>
     </div>
   </div>
-  <div class="lid-hero-visual" style="flex:0 0 420px; display:flex; justify-content:center; align-items:center; position:relative;">
+  <div class="lid-hero-visual" style="flex:0 0 358px; display:flex; justify-content:flex-end; align-items:center; position:relative;">
     <div style="position:absolute; width:440px; height:440px; border-radius:440px; background:radial-gradient(circle, rgba(110,86,240,0.22), transparent 66%); z-index:0;"></div>
-    <div id="lidHeroShot" style="position:relative; z-index:1; width:420px; height:516px; overflow:hidden; background-image:url('landing-assets/01-screen.png'); background-repeat:no-repeat; background-size:909px 540px; background-position:-80px -72px; -webkit-mask-image:linear-gradient(180deg,#000 85%,transparent 100%); mask-image:linear-gradient(180deg,#000 85%,transparent 100%);"></div>
+    <div style="position:relative; z-index:1; width:358px; max-width:100%;">
+      <dc-import name="PhoneScreen" id="s01" lang="{{ lang }}" h="516px" hint-size="368px,516px"></dc-import>
+    </div>
   </div>
 </section>
 
@@ -236,7 +238,7 @@
 
   <!-- STEP SLIDER -->
   <div style="max-width:1180px; margin:0 auto; padding:24px 28px 84px;">
-    <div style="position:relative; background:var(--surface-2); border:0.5px solid var(--line); border-radius:30px; padding:clamp(24px,3.2vw,40px) clamp(22px,3vw,40px) clamp(22px,2.6vw,32px); display:flex; flex-direction:column;">
+    <div style="position:relative; background:var(--surface-2); border:0.5px solid var(--line); border-radius:30px; padding:clamp(44px,5vw,64px) clamp(22px,3vw,40px) clamp(36px,4.4vw,52px); display:flex; flex-direction:column;">
       <!-- left arrow (hangs at the card's left edge) -->
       <button onClick="{{ prev }}" aria-label="Previous" style="position:absolute; left:-18px; top:50%; transform:translateY(-50%); width:50px; height:50px; border-radius:50px; border:0.5px solid var(--line); background:var(--surface); box-shadow:0 4px 14px rgba(26,23,34,0.12); display:flex; align-items:center; justify-content:center; z-index:3;" style-hover="background:#F2EEFF; border-color:rgba(110,86,240,0.4);">
         <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
@@ -246,9 +248,9 @@
         <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
       </button>
       <!-- content row -->
-      <div style="display:flex; align-items:center; gap:clamp(20px,3vw,48px); flex-wrap:wrap; min-height:452px;">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:clamp(20px,2.8vw,42px); flex-wrap:wrap; min-height:452px; max-width:918px; margin:0 auto; width:100%;">
         <!-- text column -->
-        <div style="flex:1 1 320px; min-width:0;">
+        <div style="flex:0 1 440px; min-width:0;">
           <div style="animation-duration:.42s; animation-timing-function:cubic-bezier(.2,.7,.2,1); animation-fill-mode:both; animation-name:{{ stepTextAnim }};">
             <div style="font:700 18px/1 ui-rounded,'SF Pro Rounded',-apple-system,system-ui; color:var(--accent); letter-spacing:0.4px; margin-bottom:16px;">{{ stepTag }}</div>
             <h3 style="font:720 clamp(25px,3vw,36px)/1.12 ui-rounded,'SF Pro Rounded',-apple-system,system-ui; letter-spacing:-0.7px; margin:0 0 16px; text-wrap:balance; min-height:1.12em;">{{ stepTitle }}</h3>
@@ -256,8 +258,10 @@
           </div>
         </div>
         <!-- phone column -->
-        <div style="flex:0 0 auto; display:flex; justify-content:center; width:443px; max-width:100%;">
-          <div style="width:443px; height:452px; max-width:100%; flex:none; background-image:{{ stepImg }}; background-repeat:no-repeat; background-size:832px 494px; background-position:-46px -42px; -webkit-mask-image:linear-gradient(180deg,#000 84%,transparent); mask-image:linear-gradient(180deg,#000 84%,transparent); animation-duration:.5s; animation-timing-function:cubic-bezier(.2,.7,.2,1); animation-fill-mode:both; animation-name:{{ stepImgAnim }};"></div>
+        <div style="flex:0 0 auto; display:flex; justify-content:center; width:400px; max-width:100%; animation-duration:.5s; animation-timing-function:cubic-bezier(.2,.7,.2,1); animation-fill-mode:both; animation-name:{{ stepImgAnim }};">
+          <div style="width:368px; max-width:100%;">
+            <dc-import name="PhoneScreen" id="{{ stepScreen }}" lang="{{ lang }}" h="452px" hint-size="368px,452px"></dc-import>
+          </div>
         </div>
       </div>
       <!-- dots (bottom, centered) -->
@@ -275,7 +279,8 @@
   <div class="lid-fade" style="max-width:1180px; margin:0 auto; padding:84px 28px 84px;">
     <div style="position:relative; overflow:hidden; border-radius:34px; background:linear-gradient(155deg,#211E2B,#16141D 60%,#0E0D13); border:0.5px solid rgba(255,255,255,0.07); padding:clamp(40px,6vw,76px) clamp(28px,5vw,68px);">
       <div style="position:absolute; top:-160px; right:-120px; width:560px; height:560px; border-radius:560px; background:radial-gradient(circle, rgba(139,121,255,0.34), transparent 62%); pointer-events:none;"></div>
-      <div style="position:relative; max-width:640px;">
+      <div style="position:relative; display:flex; align-items:center; gap:36px; justify-content:space-between;">
+      <div style="flex:1 1 auto; max-width:560px;">
         <span style="font:700 15px/1 -apple-system,system-ui; color:#B7A6FF; letter-spacing:1.6px; text-transform:uppercase;">{{ c.offerKicker }}</span>
         <h2 style="font:760 clamp(30px,4.2vw,50px)/1.08 ui-rounded,'SF Pro Rounded',-apple-system,system-ui; letter-spacing:-1.2px; color:#F4F3F7; margin:16px 0 16px; text-wrap:balance;">{{ c.offerTitle }}</h2>
         <p style="font:430 clamp(16px,1.6vw,19px)/1.55 -apple-system,system-ui; color:#A8A4B5; margin:0 0 30px; max-width:520px; text-wrap:pretty;">{{ c.offerSub }}</p>
@@ -302,6 +307,12 @@
         </a>
         <div style="margin-top:18px; font:500 13.5px/1 -apple-system,system-ui; color:#6F6B7C;">{{ c.micro }}</div>
       </div>
+      <div class="lid-cta-visual" style="flex:0 0 340px; align-self:center; display:flex; align-items:center; justify-content:center;">
+        <div style="width:340px; max-width:100%;">
+          <dc-import name="PhoneScreen" id="s07" lang="{{ lang }}" h="512px" hint-size="340px,512px"></dc-import>
+        </div>
+      </div>
+      </div>
     </div>
   </div>
 </section>
@@ -309,9 +320,11 @@
 <!-- ============ FOOTER ============ -->
 <footer style="position:relative; z-index:1; border-top:0.5px solid var(--line);">
   <div class="lid-foot" style="max-width:1180px; margin:0 auto; padding:36px 28px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+    <span style="display:flex; align-items:center; gap:8px;">
     <span style="width:26px; height:26px; border-radius:26px; display:flex; align-items:center; justify-content:center; background:linear-gradient(150deg,#6e56f0,#9b86ff 55%,#1f9d63);"><span style="width:8px; height:8px; border-radius:8px; background:rgba(255,255,255,0.94);"></span></span>
     <span style="font:680 16px/1 ui-rounded,'SF Pro Rounded',-apple-system,system-ui;">Lid</span>
-    <span style="font:430 14px/1 -apple-system,system-ui; color:var(--text-4);">— Expense Coach</span>
+    <span style="font:430 14px/1 -apple-system,system-ui; color:var(--text-4); margin-left:-1px;">{{ c.brandTag }}</span>
+    </span>
     <span class="lid-foot-spacer" style="flex:1;"></span>
     <span class="lid-foot-tag" style="font:430 13.5px/1 -apple-system,system-ui; color:var(--text-4);">{{ c.footTag }}</span>
     <span style="font:430 13.5px/1 -apple-system,system-ui; color:var(--text-5);">© 2026</span>
@@ -359,7 +372,7 @@ const DICT = {
     offerSub:'Download Lid, answer a few questions by chat, and watch it build your plan. Free to start.',
     offer1:'Set up in 3 minutes, just by chatting', offer2:'Every dollar tracked, automatically', offer3:'A coach that nudges — never nags',
     micro:'iPhone · Free to start · No spreadsheets, ever',
-    footTag:'Your AI money coach.', heroLabel:'First screen',
+    footTag:'Your AI money coach.', heroLabel:'First screen', brandTag:'— Expense Coach',
   },
   fr: {
     nav_how:'Comment ça marche', nav_why:'Pourquoi Lid', cta:'Obtenir l’app', dlOn:'Télécharger sur l’',
@@ -398,7 +411,7 @@ const DICT = {
     offerSub:'Télécharge Lid, réponds à quelques questions par message et regarde-le bâtir ton plan. Gratuit au départ.',
     offer1:'Prêt en 3 minutes, juste en discutant', offer2:'Chaque dollar suivi, automatiquement', offer3:'Un coach qui rappelle — sans harceler',
     micro:'iPhone · Gratuit au départ · Jamais de tableur',
-    footTag:'Ton coach financier IA.', heroLabel:'Premier écran',
+    footTag:'Ton coach financier IA.', heroLabel:'Premier écran', brandTag:'— Coach de dépenses',
   },
   ru: {
     nav_how:'Как это работает', nav_why:'Почему Lid', cta:'Скачать', dlOn:'Загрузить в',
@@ -437,31 +450,14 @@ const DICT = {
     offerSub:'Скачай Lid, ответь на пару вопросов в чате и смотри, как он строит твой план. Бесплатно для старта.',
     offer1:'Настройка за 3 минуты, просто в чате', offer2:'Каждый рубль учтён автоматически', offer3:'Коуч, который напоминает — а не пилит',
     micro:'iPhone · Бесплатно для старта · Никаких таблиц',
-    footTag:'Твой AI-коуч по деньгам.', heroLabel:'Первый экран',
+    footTag:'Твой AI-коуч по деньгам.', heroLabel:'Первый экран', brandTag:'— Коуч по тратам',
   },
 };
 
 class Component extends DCLogic {
   state = { lang: 'fr', hero: 'A', step: 0, theme: 'light' };
 
-  componentDidMount(){ this._applyTheme(); this._applyHeroShot(); }
-  _applyHeroShot(){
-    try {
-      const apply = () => {
-        const el = document.getElementById('lidHeroShot');
-        if (el && window.LID_SCREENS && window.LID_SCREENS['01-screen']) {
-          el.style.backgroundImage = "url('" + window.LID_SCREENS['01-screen'] + "')";
-          this.forceUpdate(); // let step images pick up inlined data URIs too
-          return true;
-        }
-        return false;
-      };
-      if (!apply()) {
-        let tries = 0;
-        const t = setInterval(() => { if (apply() || ++tries > 40) clearInterval(t); }, 50);
-      }
-    } catch (e) {}
-  }
+  componentDidMount(){ this._applyTheme(); }
   componentDidUpdate(){ this._applyTheme(); }
   _applyTheme(){ try { document.body.setAttribute('data-theme', this.state.theme); } catch (e) {} }
 
@@ -470,11 +466,11 @@ class Component extends DCLogic {
     const c = DICT[lang];
     const N = 5;
     const steps = [
-      { tag: c.step1tag, t: c.step1t, b: c.step1b, img: '03-screen' },
-      { tag: c.step2tag, t: c.step2t, b: c.step2b, img: '01-screen' },
-      { tag: c.step3tag, t: c.step3t, b: c.step3b, img: '04-screen' },
-      { tag: c.step4tag, t: c.step4t, b: c.step4b, img: '07-screen' },
-      { tag: c.step5tag, t: c.step5t, b: c.step5b, img: '06-screen' },
+      { tag: c.step1tag, t: c.step1t, b: c.step1b, screen: 's03' },
+      { tag: c.step2tag, t: c.step2t, b: c.step2b, screen: 's01' },
+      { tag: c.step3tag, t: c.step3t, b: c.step3b, screen: 's04' },
+      { tag: c.step4tag, t: c.step4t, b: c.step4b, screen: 's07' },
+      { tag: c.step5tag, t: c.step5t, b: c.step5b, screen: 's06' },
     ];
     const i = ((this.state.step % N) + N) % N;
     const s = steps[i];
@@ -489,7 +485,7 @@ class Component extends DCLogic {
       stepTextAnim: i % 2 === 0 ? 'lidTxtA' : 'lidTxtB',
       stepImgAnim: i % 2 === 0 ? 'lidImgA' : 'lidImgB',
       stepTag: s.tag, stepTitle: s.t, stepBody: s.b,
-      stepImg: "url('" + ((typeof window !== 'undefined' && window.LID_SCREENS && window.LID_SCREENS[s.img]) || ('landing-assets/' + s.img + '.png')) + "')",
+      stepScreen: s.screen,
       stepCounter: '0' + (i + 1) + ' / 0' + N,
       dots,
       prev: () => this.setState(st => ({ step: ((st.step - 1) % N + N) % N })),
