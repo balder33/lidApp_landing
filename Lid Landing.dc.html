@@ -37,6 +37,11 @@
     .lid-nav{ display:none !important; }
     .lid-head-cta{ display:none !important; }
     .lid-head-row{ padding:0 16px !important; gap:10px !important; height:60px !important; }
+    .lid-hero-visual{ display:none !important; }
+    .lid-hero{ padding:70px 24px 64px !important; }
+    .lid-foot-spacer{ display:none !important; }
+    .lid-foot{ row-gap:6px !important; }
+    .lid-foot-tag{ flex-basis:100% !important; margin-top:8px !important; }
   }
 </style>
 </helmet>
@@ -82,7 +87,7 @@
 <div id="top"></div>
 
 <!-- ============ HERO A ============ -->
-<section data-screen-label="Hero A" style="position:relative; z-index:1; max-width:1180px; margin:0 auto; padding:84px 28px 84px; display:flex; align-items:center; gap:24px; flex-wrap:wrap;">
+<section data-screen-label="Hero A" class="lid-hero" style="position:relative; z-index:1; max-width:1180px; margin:0 auto; padding:84px 28px 84px; display:flex; align-items:center; gap:24px; flex-wrap:wrap;">
   <div style="flex:1 1 330px; min-width:0; max-width:600px;">
     <div style="display:inline-flex; align-items:center; gap:8px; height:34px; padding:0 15px; border-radius:999px; background:var(--accent-soft); margin-bottom:22px;">
       <span style="width:7px; height:7px; border-radius:7px; background:var(--accent);"></span>
@@ -111,7 +116,7 @@
       <span style="font:500 14px/1 -apple-system,system-ui; color:var(--text-3);">{{ c.reassure }}</span>
     </div>
   </div>
-  <div style="flex:0 0 auto; display:flex; justify-content:center; position:relative;">
+  <div class="lid-hero-visual" style="flex:0 0 auto; display:flex; justify-content:center; position:relative;">
     <div style="position:absolute; inset:auto; width:420px; height:420px; border-radius:420px; background:radial-gradient(circle, rgba(110,86,240,0.18), transparent 64%); z-index:0;"></div>
     <div style="position:relative; z-index:1; width:484px; height:494px; max-width:100%; flex:none; background-image:url('landing-assets/01-screen.png'); background-repeat:no-repeat; background-size:909px 540px; background-position:-50px -46px; -webkit-mask-image:linear-gradient(180deg,#000 84%,transparent 99%); mask-image:linear-gradient(180deg,#000 84%,transparent 99%);"></div>
   </div>
@@ -299,12 +304,12 @@
 
 <!-- ============ FOOTER ============ -->
 <footer style="position:relative; z-index:1; border-top:0.5px solid var(--line);">
-  <div style="max-width:1180px; margin:0 auto; padding:36px 28px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+  <div class="lid-foot" style="max-width:1180px; margin:0 auto; padding:36px 28px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
     <span style="width:26px; height:26px; border-radius:26px; display:flex; align-items:center; justify-content:center; background:linear-gradient(150deg,#6e56f0,#9b86ff 55%,#1f9d63);"><span style="width:8px; height:8px; border-radius:8px; background:rgba(255,255,255,0.94);"></span></span>
     <span style="font:680 16px/1 ui-rounded,'SF Pro Rounded',-apple-system,system-ui;">Lid</span>
     <span style="font:430 14px/1 -apple-system,system-ui; color:var(--text-4);">— Expense Coach</span>
-    <span style="flex:1;"></span>
-    <span style="font:430 13.5px/1 -apple-system,system-ui; color:var(--text-4);">{{ c.footTag }}</span>
+    <span class="lid-foot-spacer" style="flex:1;"></span>
+    <span class="lid-foot-tag" style="font:430 13.5px/1 -apple-system,system-ui; color:var(--text-4);">{{ c.footTag }}</span>
     <span style="font:430 13.5px/1 -apple-system,system-ui; color:var(--text-5);">© 2026</span>
   </div>
 </footer>
