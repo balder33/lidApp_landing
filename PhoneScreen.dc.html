@@ -103,6 +103,56 @@
   </div>
   </sc-if>
 
+  <!-- ====== S05 · voice capture ====== -->
+  <sc-if value="{{ isS05 }}">
+  <div style="padding:14px 18px 0; display:flex; flex-direction:column; gap:13px;">
+    <div style="display:flex; align-items:center; gap:11px;">
+      <span style="width:40px; height:40px; border-radius:50%; background:conic-gradient(from 210deg,#6E56F0,#9B86FF,#3FB984,#6E56F0); display:flex; align-items:center; justify-content:center;"><span style="width:15px; height:15px; border-radius:50%; background:#F3F1FA;"></span></span>
+      <span style="display:flex; flex-direction:column; gap:2px;"><span style="font:680 16px/1 ui-rounded,'SF Pro Rounded',-apple-system,system-ui; color:#1A1722;">{{ t.name }}</span><span style="font:430 12.5px/1 -apple-system,system-ui; color:#3FA875;">● {{ t.status }}</span></span>
+    </div>
+    <div style="display:flex; align-items:flex-start; gap:10px;">
+      <span style="flex:none; width:26px; height:26px; border-radius:50%; background:conic-gradient(from 210deg,#6E56F0,#9B86FF,#3FB984,#6E56F0); display:flex; align-items:center; justify-content:center; margin-top:4px;"><span style="width:9px; height:9px; border-radius:50%; background:#F3F1FA;"></span></span>
+      <div style="background:#fff; border-radius:21px; border-top-left-radius:7px; padding:13px 16px; box-shadow:0 7px 22px rgba(45,34,95,0.08); font:440 15px/1.45 -apple-system,system-ui; color:#211E2B;">{{ t.b1 }}</div>
+    </div>
+    <div style="align-self:flex-end; display:flex; align-items:center; gap:12px; background:linear-gradient(135deg,#7B64F3,#6A50EE); border-radius:21px; border-top-right-radius:7px; padding:12px 16px;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
+      <span style="display:flex; align-items:center; gap:3px; height:22px;">
+        <span style="width:3px; height:30%; background:rgba(255,255,255,0.9); border-radius:3px;"></span>
+        <span style="width:3px; height:62%; background:rgba(255,255,255,0.9); border-radius:3px;"></span>
+        <span style="width:3px; height:92%; background:rgba(255,255,255,0.9); border-radius:3px;"></span>
+        <span style="width:3px; height:55%; background:rgba(255,255,255,0.9); border-radius:3px;"></span>
+        <span style="width:3px; height:100%; background:rgba(255,255,255,0.9); border-radius:3px;"></span>
+        <span style="width:3px; height:42%; background:rgba(255,255,255,0.9); border-radius:3px;"></span>
+        <span style="width:3px; height:76%; background:rgba(255,255,255,0.9); border-radius:3px;"></span>
+        <span style="width:3px; height:48%; background:rgba(255,255,255,0.55); border-radius:3px;"></span>
+        <span style="width:3px; height:66%; background:rgba(255,255,255,0.55); border-radius:3px;"></span>
+        <span style="width:3px; height:34%; background:rgba(255,255,255,0.55); border-radius:3px;"></span>
+        <span style="width:3px; height:80%; background:rgba(255,255,255,0.55); border-radius:3px;"></span>
+        <span style="width:3px; height:44%; background:rgba(255,255,255,0.55); border-radius:3px;"></span>
+      </span>
+      <span style="font:560 12.5px/1 -apple-system,system-ui; color:#fff; opacity:0.9;">{{ t.dur }}</span>
+    </div>
+    <div style="display:flex; align-items:flex-start; gap:10px;">
+      <span style="flex:none; width:26px; height:26px; border-radius:50%; background:conic-gradient(from 210deg,#6E56F0,#9B86FF,#3FB984,#6E56F0); display:flex; align-items:center; justify-content:center; margin-top:4px;"><span style="width:9px; height:9px; border-radius:50%; background:#F3F1FA;"></span></span>
+      <div style="background:#fff; border-radius:21px; border-top-left-radius:7px; padding:13px 16px; box-shadow:0 7px 22px rgba(45,34,95,0.08); font:440 15px/1.45 -apple-system,system-ui; color:#211E2B;">{{ t.b2 }}</div>
+    </div>
+    <div style="background:#fff; border-radius:22px; padding:15px 16px; box-shadow:0 10px 28px rgba(45,34,95,0.09);">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span style="width:38px; height:38px; border-radius:12px; background:#EEE9FE; display:flex; align-items:center; justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6E56F0" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span>
+          <span style="display:flex; flex-direction:column; gap:3px;"><span style="font:680 15px/1 -apple-system,system-ui; color:#1A1722;">{{ t.mTitle }}</span><span style="font:430 12.5px/1.3 -apple-system,system-ui; color:#8A8593;">{{ t.mSub }}</span></span>
+        </div>
+        <span style="font:700 16px/1 -apple-system,system-ui; color:#E5634D; white-space:nowrap;">{{ t.mAmt }}</span>
+      </div>
+      <div style="height:1px; background:rgba(26,23,34,0.07); margin:13px 0;"></div>
+      <div style="display:flex; align-items:center; justify-content:space-between;">
+        <span style="display:flex; align-items:center; gap:7px; font:600 13px/1 -apple-system,system-ui; color:#1F9D63;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1F9D63" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.2l2.6 2.6L16 9"/></svg>{{ t.logged }}</span>
+        <span style="font:460 12.5px/1 -apple-system,system-ui; color:#9b96a3;">{{ t.f1 }} · {{ t.f2 }}</span>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
   <!-- ====== S06 · weekly ====== -->
   <sc-if value="{{ isS06 }}">
   <div style="padding:14px 18px 0; display:flex; flex-direction:column; gap:13px;">
@@ -160,26 +210,29 @@
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:400,&quot;height&quot;:520},&quot;id&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;s01&quot;,&quot;s03&quot;,&quot;s04&quot;,&quot;s06&quot;,&quot;s07&quot;],&quot;default&quot;:&quot;s01&quot;},&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;fr&quot;,&quot;ru&quot;],&quot;default&quot;:&quot;en&quot;},&quot;h&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;500px&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:400,&quot;height&quot;:520},&quot;id&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;s01&quot;,&quot;s03&quot;,&quot;s04&quot;,&quot;s05&quot;,&quot;s06&quot;,&quot;s07&quot;],&quot;default&quot;:&quot;s01&quot;},&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;fr&quot;,&quot;ru&quot;],&quot;default&quot;:&quot;en&quot;},&quot;h&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;500px&quot;}}">
 const SCREENS = {
   en: {
     s01: { name:'Lid', status:'Here with you', b1:'Morning, Sam. You\u2019ve got $42 safe to spend today \u2014 and you\u2019re 12 days into your buffer streak.', user:'coffee 4.85', b2:'Got it \u2014 $4.85 to Everyday spending.', mTitle:'Tim Hortons', mSub:'Coffee & snacks \u00b7 Everyday spending', mAmt:'\u2212$4.85', logged:'Logged', f1:'Change account', f2:'Undo' },
     s03: { title:'Your plan is ready', sub:'built from a 3-minute chat', b1:'Thanks for trusting me with that. Here\u2019s a starting plan from what you told me:', planTitle:'Your starting plan', i1:'Everyday spending', i2:'Groceries', i3:'Rent' },
-    s04: { name:'Lid', status:'Capture anything', b1:'Drop a receipt, type it, or say it \u2014 I\u2019ll sort it into the right envelopes.', chip:'Receipt photo', rTitle:'Loblaws receipt', rSub:'5 items \u00b7 split into 2 envelopes', rAmt:'\u2212$29.87', l1:'Oat milk', l1cat:'Groceries', l1amt:'\u2212$4.49' },
+    s04: { name:'Lid', status:'Capture anything', b1:'Snap a receipt or forward a screenshot, type it, or say it \u2014 I\u2019ll sort it into the right envelopes.', chip:'Photo or screenshot', rTitle:'Loblaws receipt', rSub:'5 items \u00b7 split into 2 envelopes', rAmt:'\u2212$29.87', l1:'Oat milk', l1cat:'Groceries', l1amt:'\u2212$4.49' },
+    s05: { name:'Lid', status:'Listening', b1:'Prefer talking? Say it out loud \u2014 I\u2019ll catch the amount and sort it.', dur:'0:03', b2:'Heard \u201cLunch 18.40\u201d \u2014 logged to Everyday spending.', mTitle:'Lunch', mSub:'Voice note \u00b7 Everyday spending', mAmt:'\u2212$18.40', logged:'Logged', f1:'Change account', f2:'Undo' },
     s06: { name:'Lid', status:'Here with you', b1:'Here\u2019s your week \u2014 the short version. You\u2019re doing better than it feels.', cardTitle:'Your week, briefly', r1n:'+52%', r1t:'Eating out', r1s:'mostly weeknights', r2n:'3', r2t:'No-spend days', r2s:'your best yet', r3n:'+$50', r3t:'Into buffer', r3s:'64% to goal', c1:'Set next week\u2019s cap', c2:'Nice' },
     s07: { title:'This month', month:'June', insight:'Deliveries are up 52% this month \u2014 almost all on weeknights. Long week? Want a cap on \u201cEating out\u201d for next week?', st1l:'Spent', st1v:'$2,470', st1s:'of $3,420 planned', st2l:'Safe today', st2v:'$42', st2s:'after set-asides', st3l:'To assign', st3v:'$1,184', st3s:'give it a job', chartTitle:'Spending this week', chartMeta:'$418 \u00b7 \u22129% vs last' },
   },
   fr: {
     s01: { name:'Lid', status:'Avec toi', b1:'Salut Sam. Tu peux d\u00e9penser 42 $ aujourd\u2019hui \u2014 et \u00e7a fait 12 jours que tu tiens ton coussin.', user:'caf\u00e9 4,85', b2:'C\u2019est not\u00e9 \u2014 4,85 $ en D\u00e9penses courantes.', mTitle:'Tim Hortons', mSub:'Caf\u00e9 & snacks \u00b7 D\u00e9penses courantes', mAmt:'\u22124,85 $', logged:'Enregistr\u00e9', f1:'Changer de compte', f2:'Annuler' },
     s03: { title:'Ton plan est pr\u00eat', sub:'cr\u00e9\u00e9 en 3 minutes de discussion', b1:'Merci de ta confiance. Voici un plan de d\u00e9part d\u2019apr\u00e8s ce que tu m\u2019as dit :', planTitle:'Ton plan de d\u00e9part', i1:'D\u00e9penses courantes', i2:'\u00c9picerie', i3:'Loyer' },
-    s04: { name:'Lid', status:'Capture tout', b1:'Envoie un re\u00e7u, \u00e9cris-le ou dis-le \u2014 je le range dans les bonnes enveloppes.', chip:'Photo du re\u00e7u', rTitle:'Re\u00e7u Loblaws', rSub:'5 articles \u00b7 r\u00e9partis en 2 enveloppes', rAmt:'\u221229,87 $', l1:'Lait d\u2019avoine', l1cat:'\u00c9picerie', l1amt:'\u22124,49 $' },
+    s04: { name:'Lid', status:'Capture tout', b1:'Photographie un re\u00e7u ou transf\u00e8re une capture, \u00e9cris-le ou dis-le \u2014 je le range dans les bonnes enveloppes.', chip:'Photo ou capture', rTitle:'Re\u00e7u Loblaws', rSub:'5 articles \u00b7 r\u00e9partis en 2 enveloppes', rAmt:'\u221229,87 $', l1:'Lait d\u2019avoine', l1cat:'\u00c9picerie', l1amt:'\u22124,49 $' },
+    s05: { name:'Lid', status:'\u00c0 l\u2019\u00e9coute', b1:'Tu pr\u00e9f\u00e8res parler ? Dis-le \u00e0 voix haute \u2014 je capte le montant et je le range.', dur:'0:03', b2:'Entendu \u00ab D\u00eener 18,40 \u00bb \u2014 enregistr\u00e9 en D\u00e9penses courantes.', mTitle:'D\u00eener', mSub:'Vocal \u00b7 D\u00e9penses courantes', mAmt:'\u221218,40 $', logged:'Enregistr\u00e9', f1:'Changer de compte', f2:'Annuler' },
     s06: { name:'Lid', status:'Avec toi', b1:'Voici ta semaine \u2014 version courte. Tu t\u2019en sors mieux qu\u2019il n\u2019y para\u00eet.', cardTitle:'Ta semaine, en bref', r1n:'+52%', r1t:'Resto', r1s:'surtout en semaine', r2n:'3', r2t:'Jours sans d\u00e9pense', r2s:'ton record', r3n:'+50 $', r3t:'Vers le coussin', r3s:'64 % de l\u2019objectif', c1:'Fixer la limite', c2:'Super' },
     s07: { title:'Ce mois-ci', month:'Juin', insight:'Les livraisons ont bondi de 52 % ce mois \u2014 surtout en semaine. Semaine charg\u00e9e ? Une limite sur \u00ab Resto \u00bb la semaine prochaine ?', st1l:'D\u00e9pens\u00e9', st1v:'2 470 $', st1s:'sur 3 420 $ pr\u00e9vus', st2l:'Dispo aujourd\u2019hui', st2v:'42 $', st2s:'apr\u00e8s mises de c\u00f4t\u00e9', st3l:'\u00c0 affecter', st3v:'1 184 $', st3s:'donne-lui un r\u00f4le', chartTitle:'D\u00e9penses cette semaine', chartMeta:'418 $ \u00b7 \u22129 % vs pr\u00e9c.' },
   },
   ru: {
     s01: { name:'Lid', status:'\u0420\u044f\u0434\u043e\u043c', b1:'\u041f\u0440\u0438\u0432\u0435\u0442, \u0421\u044d\u043c. \u0421\u0435\u0433\u043e\u0434\u043d\u044f \u043c\u043e\u0436\u043d\u043e \u043f\u043e\u0442\u0440\u0430\u0442\u0438\u0442\u044c $42 \u2014 \u0438 \u0443\u0436\u0435 12 \u0434\u043d\u0435\u0439 \u0442\u044b \u0434\u0435\u0440\u0436\u0438\u0448\u044c \u043f\u043e\u0434\u0443\u0448\u043a\u0443.', user:'\u043a\u043e\u0444\u0435 4.85', b2:'\u0417\u0430\u043f\u0438\u0441\u0430\u043b \u2014 $4,85 \u0432 \u041f\u043e\u0432\u0441\u0435\u0434\u043d\u0435\u0432\u043d\u044b\u0435 \u0442\u0440\u0430\u0442\u044b.', mTitle:'Tim Hortons', mSub:'\u041a\u043e\u0444\u0435 \u0438 \u0441\u043d\u0435\u043a\u0438 \u00b7 \u041f\u043e\u0432\u0441\u0435\u0434\u043d\u0435\u0432\u043d\u044b\u0435', mAmt:'\u2212$4,85', logged:'\u0417\u0430\u043f\u0438\u0441\u0430\u043d\u043e', f1:'\u0421\u043c\u0435\u043d\u0438\u0442\u044c \u0441\u0447\u0451\u0442', f2:'\u041e\u0442\u043c\u0435\u043d\u0438\u0442\u044c' },
     s03: { title:'\u0422\u0432\u043e\u0439 \u043f\u043b\u0430\u043d \u0433\u043e\u0442\u043e\u0432', sub:'\u0441\u043e\u0431\u0440\u0430\u043d \u0437\u0430 3 \u043c\u0438\u043d\u0443\u0442\u044b \u0440\u0430\u0437\u0433\u043e\u0432\u043e\u0440\u0430', b1:'\u0421\u043f\u0430\u0441\u0438\u0431\u043e \u0437\u0430 \u0434\u043e\u0432\u0435\u0440\u0438\u0435. \u0412\u043e\u0442 \u0441\u0442\u0430\u0440\u0442\u043e\u0432\u044b\u0439 \u043f\u043b\u0430\u043d \u043f\u043e \u0442\u0432\u043e\u0438\u043c \u043e\u0442\u0432\u0435\u0442\u0430\u043c:', planTitle:'\u0421\u0442\u0430\u0440\u0442\u043e\u0432\u044b\u0439 \u043f\u043b\u0430\u043d', i1:'\u041f\u043e\u0432\u0441\u0435\u0434\u043d\u0435\u0432\u043d\u044b\u0435 \u0442\u0440\u0430\u0442\u044b', i2:'\u041f\u0440\u043e\u0434\u0443\u043a\u0442\u044b', i3:'\u0410\u0440\u0435\u043d\u0434\u0430' },
-    s04: { name:'Lid', status:'\u041b\u043e\u0432\u043b\u044e \u0432\u0441\u0451', b1:'\u041f\u0440\u0438\u0448\u043b\u0438 \u0447\u0435\u043a, \u043d\u0430\u043f\u0438\u0448\u0438 \u0438\u043b\u0438 \u0441\u043a\u0430\u0436\u0438 \u2014 \u044f \u0440\u0430\u0437\u043b\u043e\u0436\u0443 \u043f\u043e \u043a\u043e\u043d\u0432\u0435\u0440\u0442\u0430\u043c.', chip:'\u0424\u043e\u0442\u043e \u0447\u0435\u043a\u0430', rTitle:'\u0427\u0435\u043a Loblaws', rSub:'5 \u043f\u043e\u0437\u0438\u0446\u0438\u0439 \u00b7 \u0432 2 \u043a\u043e\u043d\u0432\u0435\u0440\u0442\u0430', rAmt:'\u2212$29,87', l1:'\u041e\u0432\u0441\u044f\u043d\u043e\u0435 \u043c\u043e\u043b\u043e\u043a\u043e', l1cat:'\u041f\u0440\u043e\u0434\u0443\u043a\u0442\u044b', l1amt:'\u2212$4,49' },
+    s04: { name:'Lid', status:'\u041b\u043e\u0432\u043b\u044e \u0432\u0441\u0451', b1:'\u041f\u0440\u0438\u0448\u043b\u0438 \u0444\u043e\u0442\u043e \u0447\u0435\u043a\u0430 \u0438\u043b\u0438 \u0441\u043a\u0440\u0438\u043d\u0448\u043e\u0442, \u043d\u0430\u043f\u0438\u0448\u0438 \u0438\u043b\u0438 \u0441\u043a\u0430\u0436\u0438 \u2014 \u044f \u0440\u0430\u0437\u043b\u043e\u0436\u0443 \u043f\u043e \u043a\u043e\u043d\u0432\u0435\u0440\u0442\u0430\u043c.', chip:'\u0424\u043e\u0442\u043e \u0438\u043b\u0438 \u0441\u043a\u0440\u0438\u043d\u0448\u043e\u0442', rTitle:'\u0427\u0435\u043a Loblaws', rSub:'5 \u043f\u043e\u0437\u0438\u0446\u0438\u0439 \u00b7 \u0432 2 \u043a\u043e\u043d\u0432\u0435\u0440\u0442\u0430', rAmt:'\u2212$29,87', l1:'\u041e\u0432\u0441\u044f\u043d\u043e\u0435 \u043c\u043e\u043b\u043e\u043a\u043e', l1cat:'\u041f\u0440\u043e\u0434\u0443\u043a\u0442\u044b', l1amt:'\u2212$4,49' },
+    s05: { name:'Lid', status:'\u0421\u043b\u0443\u0448\u0430\u044e', b1:'\u0423\u0434\u043e\u0431\u043d\u0435\u0435 \u0433\u043e\u043b\u043e\u0441\u043e\u043c? \u041f\u0440\u043e\u0441\u0442\u043e \u0441\u043a\u0430\u0436\u0438 \u2014 \u044f \u043f\u043e\u0439\u043c\u0430\u044e \u0441\u0443\u043c\u043c\u0443 \u0438 \u0440\u0430\u0437\u043b\u043e\u0436\u0443.', dur:'0:03', b2:'\u0423\u0441\u043b\u044b\u0448\u0430\u043b \u00ab\u041e\u0431\u0435\u0434 18,40\u00bb \u2014 \u0437\u0430\u043f\u0438\u0441\u0430\u043b \u0432 \u041f\u043e\u0432\u0441\u0435\u0434\u043d\u0435\u0432\u043d\u044b\u0435 \u0442\u0440\u0430\u0442\u044b.', mTitle:'\u041e\u0431\u0435\u0434', mSub:'\u0413\u043e\u043b\u043e\u0441\u043e\u0432\u043e\u0435 \u00b7 \u041f\u043e\u0432\u0441\u0435\u0434\u043d\u0435\u0432\u043d\u044b\u0435', mAmt:'\u2212$18,40', logged:'\u0417\u0430\u043f\u0438\u0441\u0430\u043d\u043e', f1:'\u0421\u043c\u0435\u043d\u0438\u0442\u044c \u0441\u0447\u0451\u0442', f2:'\u041e\u0442\u043c\u0435\u043d\u0438\u0442\u044c' },
     s06: { name:'Lid', status:'\u0420\u044f\u0434\u043e\u043c', b1:'\u0412\u043e\u0442 \u0442\u0432\u043e\u044f \u043d\u0435\u0434\u0435\u043b\u044f \u2014 \u043a\u043e\u0440\u043e\u0442\u043a\u043e. \u0422\u044b \u0441\u043f\u0440\u0430\u0432\u043b\u044f\u0435\u0448\u044c\u0441\u044f \u043b\u0443\u0447\u0448\u0435, \u0447\u0435\u043c \u043a\u0430\u0436\u0435\u0442\u0441\u044f.', cardTitle:'\u041d\u0435\u0434\u0435\u043b\u044f \u0432\u043a\u0440\u0430\u0442\u0446\u0435', r1n:'+52%', r1t:'\u0415\u0434\u0430 \u0432\u043d\u0435 \u0434\u043e\u043c\u0430', r1s:'\u0432 \u043e\u0441\u043d\u043e\u0432\u043d\u043e\u043c \u0431\u0443\u0434\u043d\u0438\u043c\u0438 \u0432\u0435\u0447\u0435\u0440\u0430\u043c\u0438', r2n:'3', r2t:'\u0414\u043d\u044f \u0431\u0435\u0437 \u0442\u0440\u0430\u0442', r2s:'\u0442\u0432\u043e\u0439 \u0440\u0435\u043a\u043e\u0440\u0434', r3n:'+$50', r3t:'\u0412 \u043f\u043e\u0434\u0443\u0448\u043a\u0443', r3s:'64% \u0434\u043e \u0446\u0435\u043b\u0438', c1:'\u041b\u0438\u043c\u0438\u0442 \u043d\u0430 \u043d\u0435\u0434\u0435\u043b\u044e', c2:'\u041e\u0442\u043b\u0438\u0447\u043d\u043e' },
     s07: { title:'\u042d\u0442\u043e\u0442 \u043c\u0435\u0441\u044f\u0446', month:'\u0418\u044e\u043d\u044c', insight:'\u0414\u043e\u0441\u0442\u0430\u0432\u043a\u0438 \u0432\u044b\u0440\u043e\u0441\u043b\u0438 \u043d\u0430 52% \u0437\u0430 \u043c\u0435\u0441\u044f\u0446 \u2014 \u043f\u043e\u0447\u0442\u0438 \u0432\u0441\u0451 \u0431\u0443\u0434\u043d\u0438\u043c\u0438 \u0432\u0435\u0447\u0435\u0440\u0430\u043c\u0438. \u0422\u044f\u0436\u0451\u043b\u0430\u044f \u043d\u0435\u0434\u0435\u043b\u044f? \u041f\u043e\u0441\u0442\u0430\u0432\u0438\u0442\u044c \u043b\u0438\u043c\u0438\u0442 \u043d\u0430 \u00ab\u0415\u0434\u0443 \u0432\u043d\u0435 \u0434\u043e\u043c\u0430\u00bb?', st1l:'\u041f\u043e\u0442\u0440\u0430\u0447\u0435\u043d\u043e', st1v:'$2\u202f470', st1s:'\u0438\u0437 $3\u202f420 \u043f\u043b\u0430\u043d', st2l:'\u0414\u043e\u0441\u0442\u0443\u043f\u043d\u043e', st2v:'$42', st2s:'\u043f\u043e\u0441\u043b\u0435 \u043e\u0442\u043b\u043e\u0436\u0435\u043d\u0438\u0439', st3l:'\u0420\u0430\u0441\u043f\u0440\u0435\u0434\u0435\u043b\u0438\u0442\u044c', st3v:'$1\u202f184', st3s:'\u0434\u0430\u0439 \u0437\u0430\u0434\u0430\u0447\u0443', chartTitle:'\u0422\u0440\u0430\u0442\u044b \u0437\u0430 \u043d\u0435\u0434\u0435\u043b\u044e', chartMeta:'$418 \u00b7 \u22129% \u043a \u043f\u0440\u043e\u0448\u043b\u043e\u0439' },
   },
@@ -197,6 +250,7 @@ class Component extends DCLogic {
       isS01: id === 's01',
       isS03: id === 's03',
       isS04: id === 's04',
+      isS05: id === 's05',
       isS06: id === 's06',
       isS07: id === 's07',
     };
